@@ -27,7 +27,7 @@ This project builds a video streaming application that successfully integrates t
 
 # run ngrok
 
-ngrok http --domain=grouse-fit-cow.ngrok-free.app 3000
+ngrok http --domain=driving-swan-bright.ngrok-free.app 3000
 
 # genarate db
 
