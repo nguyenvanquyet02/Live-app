@@ -1,5 +1,6 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
 import { VerifiedMark } from "../verified_mark";
 import { BioModal } from "./bio_modal";
 import {
@@ -17,6 +18,7 @@ interface AboutCardProps {
   bio: string | null;
   followedByCount: number;
   discordUrl?: string | null;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AboutCard = ({
@@ -26,6 +28,7 @@ export const AboutCard = ({
   bio,
   followedByCount,
   discordUrl,
+  setOpen,
 }: AboutCardProps) => {
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
@@ -41,7 +44,12 @@ export const AboutCard = ({
         </div>
         {isHost && <BioModal initialValue={bio} />}
       </div>
-      <div className="text-sm text-muted-foreground">
+      <div
+        className={`text-sm text-muted-foreground ${
+          isHost && "cursor-pointer"
+        }`}
+        onClick={isHost ? () => setOpen(true) : undefined}
+      >
         <span className="font-semibold text-primary">{followedByCount}</span>{" "}
         {followedByLabel}
       </div>

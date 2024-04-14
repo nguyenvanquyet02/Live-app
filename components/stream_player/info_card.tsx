@@ -65,10 +65,10 @@ export const InfoCard = ({
           )}
         </div>
         <div className="flex items-center justify-start gap-x-4 w-auto bg-100">
-          <h3 className="text-sm text-muted-foreground mb-2">
+          <h3 className="text-sm text-muted-foreground">
             Discord invite link:
           </h3>
-          <Link href="" className="w-auto">
+          <Link href="" className="w-auto text-sm">
             <span className="text-sm font-semibold">{discordUrl}</span>
           </Link>
         </div>
