@@ -26,6 +26,22 @@ export const getFollowedUsers = async () => {
     return [];
   }
 };
+export const getFollower = async (id: string) => {
+  try {
+    const followerUsers = db.follow.findMany({
+      where: {
+        followingId: id,
+      },
+      include: {
+        follower: true,
+      },
+    });
+
+    return followerUsers;
+  } catch {
+    return [];
+  }
+};
 
 export const checkFollowUser = async (id: string) => {
   try {
