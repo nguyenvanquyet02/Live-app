@@ -39,7 +39,7 @@ export const PopupShowFollowers: React.FC<Props> = ({
       {open && (
         <div className="z-10 w-full">
           <div
-            className="fixed top-0 left-0 bottom-0 right-0 bg-slate-700 opacity-65"
+            className="fixed top-0 left-0 bottom-0 right-0 bg-black/100 opacity-65"
             onClick={() => setOpen(false)}
           />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-h-[360px] w-full max-w-[400px] h-full bg-[#1f2128] z-10  rounded-md overflow-hidden">
