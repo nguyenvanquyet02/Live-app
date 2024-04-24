@@ -2,7 +2,11 @@ import { currentUser } from "@clerk/nextjs";
 
 import { StreamPlayer } from "@/components/stream_player";
 import { getUserByUsername } from "@/app/api/user.service";
-import { getFollowedUsers, getFollower } from "@/app/api/follow.service";
+import {
+  checkFollowUser,
+  getFollowedUsers,
+  getFollower,
+} from "@/app/api/follow.service";
 
 interface CreatorPageProps {
   params: {
@@ -13,9 +17,17 @@ interface CreatorPageProps {
 const CreatorPage = async ({ params }: CreatorPageProps) => {
   const externalUser = await currentUser();
   const user = await getUserByUsername(params.username);
-  let followers = null;
+  let followersList: any = null;
   if (user !== null && user !== undefined) {
-    followers = await getFollower(user.id as string);
+    const followers = await getFollower(user.id as string);
+    if (followers) {
+      followersList = await Promise.all(
+        followers.map(async (follower: any) => {
+          const isFollowing = await checkFollowUser(follower.follower?.id);
+          return { ...follower, isFollowing };
+        })
+      );
+    }
   }
   const following = await getFollowedUsers();
   if (!user || user.externalUserId !== externalUser?.id || !user.stream) {
@@ -28,7 +40,7 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
         user={user}
         stream={user.stream}
         isFollowing
-        followers={followers}
+        followers={followersList}
         following={following}
       />
     </div>

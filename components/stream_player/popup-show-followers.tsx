@@ -1,14 +1,9 @@
 import { UserItem } from "@/app/(browse)/_components/sidebar/user_item";
-import React, {
-  // Dispatch,
-  // SetStateAction,
-  useState,
-  // useTransition,
-} from "react";
+import React, { useState, useTransition } from "react";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-// import { onFollow } from "@/actions/follow";
-// import { toast } from "sonner";
+import { onFollow, onUnfollow } from "@/actions/follow";
+import { toast } from "sonner";
 
 interface Props {
   followers?: any;
@@ -21,18 +16,26 @@ export const PopupShowFollowers: React.FC<Props> = ({
   following,
   numberOfFollowers,
 }) => {
-  console.log("🚀 ~ followers:", followers);
-  // const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [activeTab, setActiveTab] = useState("Followers");
-  // const handleFollow = (id: string) => {
-  //   startTransition(() => {
-  //     onFollow(id)
-  //       .then((data) =>
-  //         toast.success(`You are now following ${data.following.username}`)
-  //       )
-  //       .catch(() => toast.error("Something went wrong"));
-  //   });
-  // };
+  const handleFollow = (id: string) => {
+    startTransition(() => {
+      onFollow(id)
+        .then((data) =>
+          toast.success(`You are now following ${data.following.username}`)
+        )
+        .catch(() => toast.error("Something went wrong"));
+    });
+  };
+  const handleUnfollow = (id: string) => {
+    startTransition(() => {
+      onUnfollow(id)
+        .then((data) =>
+          toast.success(`You have unfollowed ${data.following.username}`)
+        )
+        .catch(() => toast.error("Something went wrong"));
+    });
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -75,13 +78,29 @@ export const PopupShowFollowers: React.FC<Props> = ({
                           imageUrl={follower?.follower?.imageUrl}
                           category="test"
                         />
-                        {/* <Button
+                        {follower?.isFollowing ? (
+                          <Button
+                            disabled={isPending}
+                            className="absolute text-sm bg-transparent hover:bg-transparent text-muted-foreground top-1/2 right-2 -translate-y-1/2 cursor-pointer p-1 z-10 hidden group-hover:block"
+                            onClick={() => {
+                              if (isPending) return;
+                              handleUnfollow(follower?.follower?.id);
+                            }}
+                          >
+                            Unfollow
+                          </Button>
+                        ) : (
+                          <Button
                             disabled={isPending}
                             className="absolute text-sm bg-transparent hover:bg-transparent hover:text-white text-muted-foreground top-1/2 right-2 -translate-y-1/2 cursor-pointer p-1 z-10 hidden group-hover:block"
-                            onClick={() => handleFollow(follower?.follower?.id)}
+                            onClick={() => {
+                              if (isPending) return;
+                              handleFollow(follower?.follower?.id);
+                            }}
                           >
                             Follow
-                          </Button> */}
+                          </Button>
+                        )}
                       </div>
                     ))}
                   </>
@@ -97,12 +116,23 @@ export const PopupShowFollowers: React.FC<Props> = ({
                 {following?.length > 0 ? (
                   <>
                     {following.map((follow: any) => (
-                      <UserItem
-                        key={follow.following.id}
-                        userName={follow.following.username}
-                        imageUrl={follow.following.imageUrl}
-                        category="test"
-                      />
+                      <div className="relative group" key={follow.following.id}>
+                        <UserItem
+                          userName={follow.following.username}
+                          imageUrl={follow.following.imageUrl}
+                          category="test"
+                        />
+                        <Button
+                          disabled={isPending}
+                          className="absolute text-sm bg-transparent hover:bg-transparent text-muted-foreground top-1/2 right-2 -translate-y-1/2 cursor-pointer p-1 z-10 hidden group-hover:block"
+                          onClick={() => {
+                            if (isPending) return;
+                            handleUnfollow(follow.following.id);
+                          }}
+                        >
+                          Unfollow
+                        </Button>
+                      </div>
                     ))}
                   </>
                 ) : (
