@@ -10,8 +10,6 @@ import { Video, VideoSkeleton } from "./video";
 import { Header, HeaderSkeleton } from "./header";
 import { useViewerToken } from "@/hooks/use_viewer_token";
 import { useChatSidebar } from "@/store/use_chat_sidebar";
-import { PopupShowFollowers } from "./popup-show-followers";
-import { useState } from "react";
 
 type CustomStream = {
   id: string;
@@ -51,8 +49,6 @@ export const StreamPlayer = ({
 }: StreamPlayerProps) => {
   const { token, name, identity } = useViewerToken(user.id);
   const { collapsed } = useChatSidebar((state) => state);
-  const [open, setOpen] = useState<boolean>(false);
-
   if (!token || !name || !identity) {
     return <StreamPlayerSkeleton />;
   }
@@ -99,7 +95,8 @@ export const StreamPlayer = ({
             bio={user.bio}
             followedByCount={user._count.followedBy}
             discordUrl={stream.discordUrl}
-            setOpen={setOpen}
+            followers={followers}
+            following={following}
           />
         </div>
         <div
@@ -119,12 +116,6 @@ export const StreamPlayer = ({
           />
         </div>
       </LiveKitRoom>
-      <PopupShowFollowers
-        open={open}
-        setOpen={setOpen}
-        followers={followers}
-        following={following}
-      />
     </>
   );
 };

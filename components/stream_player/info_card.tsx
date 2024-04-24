@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Pencil } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 
@@ -26,25 +25,29 @@ export const InfoCard = ({
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
 
-  if (!isHost) return null;
-
   return (
     <div className="rounded-xl bg-background">
-      <div className="flex items-center p-6">
-        <div>
-          <h2 className="text-sm lg:text-lg font-semibold capitalize">
-            Edit your stream info
-          </h2>
-          <p className="text-muted-foreground text-xs lg:text-sm">
-            Maximize your visibility
-          </p>
+      {isHost ? (
+        <div className="flex items-center p-6">
+          <div>
+            <h2 className="text-sm lg:text-lg font-semibold capitalize">
+              Edit your stream info
+            </h2>
+            <p className="text-muted-foreground text-xs lg:text-sm">
+              Maximize your visibility
+            </p>
+          </div>
+          <InfoModal
+            initialName={name}
+            initialThumbnailUrl={thumbnailUrl}
+            initialDiscordUrl={discordUrl}
+          />
         </div>
-        <InfoModal
-          initialName={name}
-          initialThumbnailUrl={thumbnailUrl}
-          initialDiscordUrl={discordUrl}
-        />
-      </div>
+      ) : (
+        <h3 className="text-sm lg:text-lg font-semibold capitalize px-6 py-3">
+          Channel information
+        </h3>
+      )}
       <Separator />
       <div className="p-4 lg:p-6 space-y-4">
         <div className="flex items-center justify-start gap-x-4">
