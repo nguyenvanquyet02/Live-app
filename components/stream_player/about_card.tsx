@@ -10,6 +10,7 @@ import {
   MessageSquare,
 } from "lucide-react";
 import Link from "next/link";
+import { PopupShowFollowers } from "./popup-show-followers";
 
 interface AboutCardProps {
   hostName: string;
@@ -18,7 +19,8 @@ interface AboutCardProps {
   bio: string | null;
   followedByCount: number;
   discordUrl?: string | null;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  followers?: any;
+  following?: any;
 }
 
 export const AboutCard = ({
@@ -28,12 +30,11 @@ export const AboutCard = ({
   bio,
   followedByCount,
   discordUrl,
-  setOpen,
+  followers,
+  following,
 }: AboutCardProps) => {
   const hostAsViewer = `host-${hostIdentity}`;
   const isHost = viewerIdentity === hostAsViewer;
-
-  const followedByLabel = followedByCount === 1 ? "follower" : "followers";
 
   return (
     <div className="group rounded-xl bg-background p-6 flex flex-col gap-y-3">
@@ -44,15 +45,19 @@ export const AboutCard = ({
         </div>
         {isHost && <BioModal initialValue={bio} />}
       </div>
-      <div
-        className={`text-sm text-muted-foreground ${
-          isHost && "cursor-pointer"
-        }`}
-        onClick={isHost ? () => setOpen(true) : undefined}
-      >
-        <span className="font-semibold text-primary">{followedByCount}</span>{" "}
-        {followedByLabel}
-      </div>
+      {isHost ? (
+        <PopupShowFollowers
+          numberOfFollowers={followedByCount}
+          followers={followers}
+          following={following}
+        />
+      ) : (
+        <div className="text-sm text-muted-foreground">
+          <span className="font-semibold text-primary">{followedByCount}</span>{" "}
+          {+followedByCount === 1 ? "follower" : "followers"}
+        </div>
+      )}
+
       <p className="text-sm">
         {bio || "This user prefers to keep an air of mystery about them."}
       </p>
