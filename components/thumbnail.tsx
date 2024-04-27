@@ -5,7 +5,7 @@ import { UserAvatar } from "./user_avatar";
 import { LiveBadge } from "./live_badge";
 
 interface ThumbnailProps {
-  src: string | null;
+  src?: string | null;
   fallback: string;
   isLive: boolean;
   username: string;

@@ -8,7 +8,7 @@ import { useCreatorSidebar } from "@/store/creator_sidebar";
 
 export const Toggle = () => {
   const { collapsed, onExpand, onCollapse } = useCreatorSidebar(
-    (state) => state,
+    (state) => state
   );
 
   const label = collapsed ? "Expand" : "Collapse";
@@ -27,7 +27,7 @@ export const Toggle = () => {
       {!collapsed && (
         <div className="p-3 pl-6 mb-2 hidden lg:flex items-center w-full">
           <p className="font-semibold text-primary">Dashboard</p>
-          <Hint label={label} side="right" asChild>
+          <Hint label={label} side="left" asChild>
             <Button
               onClick={onCollapse}
               variant="ghost"
