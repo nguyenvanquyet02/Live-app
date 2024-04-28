@@ -12,7 +12,7 @@ export const Results = async () => {
       {recommended?.length > 0 && (
         <div className="mb-4">
           <h2 className="text-lg font-semibold mb-4">Recommended</h2>
-          <ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
             {recommended.map((user) => (
               <UserItem
                 key={user.id}
@@ -21,7 +21,7 @@ export const Results = async () => {
                 isLive={user?.stream?.isLive}
               />
             ))}
-          </ul>
+          </div>
         </div>
       )}
       <div>

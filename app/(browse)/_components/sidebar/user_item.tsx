@@ -27,10 +27,7 @@ export const UserItem = ({
   return (
     <Button
       variant="ghost"
-      className={cn(
-        "w-full md:max-w-[244px] h-12 justify-start",
-        isActive && "bg-accent"
-      )}
+      className={cn("w-full h-12 justify-start", isActive && "bg-accent")}
       asChild
     >
       <Link href={href}>
