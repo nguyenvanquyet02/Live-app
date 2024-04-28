@@ -1,23 +1,13 @@
-import { getRecommended } from "@/app/api/recommend.service";
-import { Recommended } from "./recommended";
 import { Toggle, ToggleSkeleton } from "./toggle";
 import { Wrapper } from "./wrapper";
-import { getFollowedUsers } from "@/app/api/follow.service";
-import { Following } from "./following";
 import { FollowingSkeleton, RecommendedSkeleton } from "./skeletons";
+import { Navigation } from "./navigation";
 
 export const Sidebar = async () => {
-  const recommended = await getRecommended();
-  const following = await getFollowedUsers();
-
-  // The main nav bar shows users following and recommened lists
   return (
     <Wrapper>
       <Toggle />
-      <div className="space-y-4 pt-4 lg:pt-0">
-        <Following data={following} />
-        <Recommended data={recommended} />
-      </div>
+      <Navigation />
     </Wrapper>
   );
 };

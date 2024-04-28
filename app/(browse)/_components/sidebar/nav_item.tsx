@@ -6,7 +6,7 @@ import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCreatorSidebar } from "@/store/creator_sidebar";
+import { useSidebar } from "@/store/sidebar";
 import { Hint } from "@/components/hint";
 
 interface NavItemProps {
@@ -22,7 +22,7 @@ export const NavItem = ({
   href,
   isActive,
 }: NavItemProps) => {
-  const { collapsed } = useCreatorSidebar((state) => state);
+  const { collapsed } = useSidebar((state) => state);
 
   return (
     <Hint label={label} side="right" asChild collapsed={collapsed}>
