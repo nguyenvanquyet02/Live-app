@@ -9,40 +9,44 @@ import { NavItem, NavItemSkeleton } from "./nav_item";
 export const Navigation = () => {
   const pathname = usePathname();
   const { user } = useUser();
-
-  const routes = [
-    {
-      label: "For you",
-      href: `/`,
-      icon: HeartIcon,
-    },
-    {
-      label: "Live",
-      href: `/live`,
-      icon: Fullscreen,
-    },
-    {
-      label: "Following",
-      href: `/following`,
-      icon: UserCheck,
-    },
-    {
-      label: "Follower",
-      href: `/follower`,
-      icon: Users,
-    },
-  ];
-
+  let routes = [];
   if (!user?.username) {
-    return (
-      <ul className="space-y-2">
-        {[...Array(4)].map((_, i) => (
-          <NavItemSkeleton key={i} />
-        ))}
-      </ul>
-    );
+    routes = [
+      {
+        label: "For you",
+        href: `/`,
+        icon: HeartIcon,
+      },
+      {
+        label: "Live",
+        href: `/live`,
+        icon: Fullscreen,
+      },
+    ];
+  } else {
+    routes = [
+      {
+        label: "For you",
+        href: `/`,
+        icon: HeartIcon,
+      },
+      {
+        label: "Live",
+        href: `/live`,
+        icon: Fullscreen,
+      },
+      {
+        label: "Following",
+        href: `/following`,
+        icon: UserCheck,
+      },
+      {
+        label: "Follower",
+        href: `/follower`,
+        icon: Users,
+      },
+    ];
   }
-
   return (
     <ul className="space-y-2 px-2 pt-4 lg:pt-0">
       {routes.map((route) => (
