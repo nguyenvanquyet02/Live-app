@@ -30,7 +30,7 @@ export const Actions = async () => {
               </Button>
             </SignUpButton>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="items-center justify-center hidden md:flex">
             <User />
           </div>
         </div>
